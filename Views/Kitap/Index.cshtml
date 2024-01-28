@@ -1,0 +1,96 @@
+﻿@using WebUygulamaProje1.Utility;
+
+@model List<Kitap>
+
+@if (TempData["basarili"] != null)
+{
+			<h2 style="color:red">@TempData["basarili"]</h2>
+}
+
+
+<div class="container">
+
+	<div class="row pt-3 pb-4"
+		<div>
+			<h1>Kitaplar</h1>
+		</div>
+	</div>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>		
+				<th>					
+				</th>
+
+				<th>
+					Id
+				</th>
+				<th>
+					KitapAdi
+				</th>
+				<th>
+					Tanim
+				</th>
+				<th>
+					Yazar
+				</th>
+				<th>
+					Fiyat
+				</th>
+				<th>
+					KitapTuru
+				</th>	
+
+				@if (User.IsInRole(UserRoles.Role_Admin))
+				{
+					<th>
+					</th>
+					<th>
+					</th>
+				}
+
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach(var kitap in Model)
+			{
+				<tr>
+						<td align="center" valign="middle">
+								<img src="@kitap.ResimUrl" style="border-radius: 7px; border: 1px  solid #bbb9b9;
+									 max-width: 145px; max: 275px;" />
+						</td>
+						<td align="center" valign="middle">@kitap.Id</td>
+						<td align="center" valign="middle">@kitap.KitapAdi</td>
+						<td align="center" valign="middle">@kitap.Tanim</td>
+						<td align="center" valign="middle">@kitap.Yazar</td>
+						<td align="center" valign="middle">@kitap.Fiyat</td>
+						<td align="center" valign="middle">@kitap.KitapTuru.Ad</td>
+
+					@if (User.IsInRole(UserRoles.Role_Admin))
+					{
+						<td align="center" valign="middle">
+							<a asp-controller="Kitap" asp-action="EkleGuncelle" asp-route-id="@kitap.Id" type="button" class="btn btn-success" style="width:250px">Güncelle</a>
+						</td>
+						<td align="center" valign="middle">
+							<a asp-controller="Kitap" asp-action="Sil" asp-route-id="@kitap.Id" type="button" class="btn btn-danger" style="width:250px">Sil</a>						
+						</td>
+					}
+
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	@if (User.IsInRole(UserRoles.Role_Admin))
+	{
+		<div class="row pt-3 pb-2">
+			<div>
+				<a asp-controller="Kitap" asp-action="EkleGuncelle" class="btn btn-lg btn-primary" type="button">
+					Yeni Kitap Oluştur
+				</a>
+			</div>
+		</div>
+	}
+
+</div>
